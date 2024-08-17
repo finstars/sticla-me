@@ -1,8 +1,8 @@
-import { Noto_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./bg.scss";
 import "./globals.css";
 
-const noto = Noto_Sans({ variable: [400, 500, 600, 700, 800, 900], subsets: ["latin"] })
+const noto = Poppins({ weight: ["400", "500", "600", "700", "800", "900"], subsets: ["latin"] })
 
 export const metadata = {
   title: "Sticla.me",
