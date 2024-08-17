@@ -1,0 +1,40 @@
+.homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* background-color: #f0f4f8; */
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #34495e;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.joinWaitlistButton {
+  font-size: 1rem;
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.joinWaitlistButton:hover {
+  background-color: #2ecc71;
+}
