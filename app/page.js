@@ -4,12 +4,9 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <div className={styles.homepage}>
-      <h1 className={styles.title}>Don't Bottle Up, Recycle Smart</h1>
-      <p className={styles.description}>
-        Recycling is essential. Proper recycling reduces
-        waste, saves energy, and keeps our planet clean. Join us in making a
-        difference by recycling smart!
-      </p>
+      {/* <h3>Sticla</h3> */}
+      <h1 className={styles.title}><span>Sticla</span>.me</h1>
+      <p className={styles.description}>Don't Bottle Up, Recycle Smart</p>
       <button className={styles.joinWaitlistButton}>Join Waitlist</button>
     </div>
   );

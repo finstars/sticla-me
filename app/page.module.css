@@ -19,17 +19,22 @@
   margin: 0
 }
 
+.title span {
+  color: #4DAF48
+}
+
 .description {
   font-size: 22px;
   line-height: 30px;
   color: #fff;
   max-width: 600px;
+  margin-bottom: 30px;
 }
 
 .joinWaitlistButton {
   font-size: 1rem;
   padding: 10px 20px;
-  background-color: #27ae60;
+  background-color: #4DAF48;
   color: white;
   border: none;
   border-radius: 5px;
