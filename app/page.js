@@ -6,7 +6,7 @@ export default function Home() {
     <div className={styles.homepage}>
       <h1 className={styles.title}>Don't Bottle Up, Recycle Smart</h1>
       <p className={styles.description}>
-        Recycling is essential for the environment. Proper recycling reduces
+        Recycling is essential. Proper recycling reduces
         waste, saves energy, and keeps our planet clean. Join us in making a
         difference by recycling smart!
       </p>
