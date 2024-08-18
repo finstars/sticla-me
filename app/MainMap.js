@@ -62,7 +62,7 @@ function MainMap() {
             >
                 <AdvancedMarker
                     ref={markerRef}
-                    position={{ lat: 46.75409, lng: 23.54627 }}
+                    position={{ lat: 46.778830, lng: 23.613560 }}
                     onClick={handleMarkerClick}
                 >
                     <Pin
@@ -76,8 +76,8 @@ function MainMap() {
                     <InfoWindow anchor={marker} className={styles.infoWindow} onClose={handleClose}>
                         <img src="/pin.jpg" alt="" />
                         <h2>Profi City New</h2>
-                        <p><b>Stare</b>: <span>Disponibil pentru reciclare</span></p>
                         <p><b>Adresa</b>: Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
+                        <p><b>Stare</b>: <span>Disponibil pentru reciclare</span></p>
                         <p><b>Ultimul update</b>: 3 ore în urmǎ</p>
                         <div className={styles.buttons}>
                             <button className={styles.functional}>It's functional</button>
