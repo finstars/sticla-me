@@ -1,0 +1,26 @@
+.infoWindow {
+    color: #000;
+    padding-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.infoWindow img {
+    display: block;
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    object-fit: cover;
+    width: 300px;
+}
+
+.infoWindow h2 {
+    margin: 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.infoWindow p {
+    font-size: 16px;
+    margin: 0;
+}

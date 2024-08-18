@@ -1,7 +1,9 @@
 "use client"
 
-import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React, { useCallback, useState } from 'react'
+// import { GoogleMap, Marker, MarkerClusterer, MarkerF, useJsApiLoader } from '@react-google-maps/api';
+import { APIProvider, Map, AdvancedMarker, Pin, Marker, useAdvancedMarkerRef, InfoWindow } from '@vis.gl/react-google-maps';
+import styles from "./MainMap.module.css"
 
 const containerStyle = {
     overflow: "hidden",
@@ -18,46 +20,68 @@ const center = {
     lng: 23.6236
 };
 
-function Map() {
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyDBo5jso7UAphik_z4r6xf_y07meX5n4qU"
-    })
+const apiKey = "AIzaSyDBo5jso7UAphik_z4r6xf_y07meX5n4qU"
 
-    const [map, setMap] = React.useState(null)
+function MainMap() {
+    // `markerRef` and `marker` are needed to establish the connection between
+    // the marker and infowindow (if you're using the Marker component, you
+    // can use the `useMarkerRef` hook instead).
+    const [markerRef, marker] = useAdvancedMarkerRef();
 
-    const onLoad = React.useCallback(function callback(map) {
-        // This is just an example of getting and using the map instance!!! don't just blindly copy!
-        // const bounds = new window.google.maps.LatLngBounds(center);
-        // map.fitBounds(bounds);
+    const [infoWindowShown, setInfoWindowShown] = useState(false);
 
-        setMap(map)
-    }, [])
+    // clicking the marker will toggle the infowindow
+    const handleMarkerClick = useCallback(
+        () => setInfoWindowShown(isShown => !isShown),
+        []
+    );
 
-    const onUnmount = React.useCallback(function callback(map) {
-        setMap(null)
-    }, [])
+    // if the maps api closes the infowindow, we have to synchronize our state
+    const handleClose = useCallback(() => setInfoWindowShown(false), []);
 
-    return isLoaded ? (
-        <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            options={{
-                styles: mapStyles,
-                fullscreenControl: false,
-                zoomControl: false,
-                streetViewControl: false,
-                streetViewControl: false,
-                mapTypeControl: false,
-            }}
-            zoom={14}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-        >
-            { /* Child components, such as markers, info windows, etc. */}
-            <></>
-        </GoogleMap>
-    ) : <></>
+    return (
+        <APIProvider apiKey={apiKey}>
+            <Map
+                mapId="google-map"
+                style={containerStyle}
+                defaultCenter={center}
+                defaultZoom={14}
+                gestureHandling={'greedy'}
+                disableDefaultUI={true}
+                options={{
+                    styles: mapStyles,
+                    fullscreenControl: false,
+                    zoomControl: false,
+                    streetViewControl: false,
+                    streetViewControl: false,
+                    mapTypeControl: false,
+                }}
+                zoom={14}
+            // onLoad={onLoad}
+            // onUnmount={onUnmount}
+            >
+                <AdvancedMarker
+                    ref={markerRef}
+                    position={{ lat: 46.75409, lng: 23.54627 }}
+                    onClick={handleMarkerClick}
+                >
+                    <Pin
+                        background={'#0f9d58'}
+                        borderColor={'#006425'}
+                        glyphColor={'#60d98f'}
+                    />
+                </AdvancedMarker>
+
+                {infoWindowShown && (
+                    <InfoWindow anchor={marker} className={styles.infoWindow} onClose={handleClose}>
+                        <img src="/pin.jpg" alt="" />
+                        <h2>Profi City New</h2>
+                        <p>Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
+                    </InfoWindow>
+                )}
+            </Map>
+        </APIProvider>
+    )
 }
 
 const mapStyles = [
@@ -132,7 +156,7 @@ const mapStyles = [
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "visibility": "on"
+                "visibility": "off"
             },
             {
                 "saturation": "-100"
@@ -192,7 +216,7 @@ const mapStyles = [
         "elementType": "all",
         "stylers": [
             {
-                "visibility": "simplified"
+                "visibility": "off"
             }
         ]
     },
@@ -225,4 +249,4 @@ const mapStyles = [
     }
 ]
 
-export default React.memo(Map)
+export default React.memo(MainMap)

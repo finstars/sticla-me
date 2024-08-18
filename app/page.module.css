@@ -12,7 +12,7 @@
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   color: #000;
   position: absolute;
@@ -21,11 +21,11 @@
   left: 0;
   right: 0;
   margin: auto;
-  top: 10px;
+  top: 20px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
   background: #fff;
   padding: 5px 10px;
-  border-radius: 2px;
+  border-radius: 100px;
 }
 
 .logo span {
