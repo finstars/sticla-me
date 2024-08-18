@@ -43,7 +43,12 @@ function Map() {
             mapContainerStyle={containerStyle}
             center={center}
             options={{
-                styles: mapStyles
+                styles: mapStyles,
+                fullscreenControl: false,
+                zoomControl: false,
+                streetViewControl: false,
+                streetViewControl: false,
+                mapTypeControl: false,
             }}
             zoom={14}
             onLoad={onLoad}
