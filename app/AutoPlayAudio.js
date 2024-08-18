@@ -9,28 +9,28 @@ const AutoPlayAudio = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
-  useEffect(() => {
-    const playAudio = () => {
-      if (audioRef.current && !isPlaying && !alreadyDone.current) {
-        audioRef.current.play();
-        setIsPlaying(true);
-        alreadyDone.current = true;
-      }
-      document.removeEventListener('click', playAudio);
-      document.removeEventListener('keypress', playAudio);
-      document.removeEventListener('touchstart', playAudio);
-    };
+  // useEffect(() => {
+  //   const playAudio = () => {
+  //     if (audioRef.current && !isPlaying && !alreadyDone.current) {
+  //       audioRef.current.play();
+  //       setIsPlaying(true);
+  //       alreadyDone.current = true;
+  //     }
+  //     document.removeEventListener('click', playAudio);
+  //     document.removeEventListener('keypress', playAudio);
+  //     document.removeEventListener('touchstart', playAudio);
+  //   };
 
-    document.addEventListener('click', playAudio);
-    document.addEventListener('keypress', playAudio);
-    document.addEventListener('touchstart', playAudio);
+  //   document.addEventListener('click', playAudio);
+  //   document.addEventListener('keypress', playAudio);
+  //   document.addEventListener('touchstart', playAudio);
 
-    return () => {
-      document.removeEventListener('click', playAudio);
-      document.removeEventListener('keypress', playAudio);
-      document.removeEventListener('touchstart', playAudio);
-    };
-  }, [isPlaying]);
+  //   return () => {
+  //     document.removeEventListener('click', playAudio);
+  //     document.removeEventListener('keypress', playAudio);
+  //     document.removeEventListener('touchstart', playAudio);
+  //   };
+  // }, [isPlaying]);
 
   const togglePlayPause = () => {
     if (audioRef.current) {
