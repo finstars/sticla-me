@@ -24,7 +24,10 @@
     font-size: 14px;
     margin: 0;
     text-align: center;
-    opacity: 0.75
+    opacity: 0.75;
+    line-height: 20px;
+    margin: 0 0 5px 0;
+    text-align: left;
 }
 
 .buttons {

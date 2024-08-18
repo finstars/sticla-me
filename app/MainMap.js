@@ -76,7 +76,8 @@ function MainMap() {
                     <InfoWindow anchor={marker} className={styles.infoWindow} onClose={handleClose}>
                         <img src="/pin.jpg" alt="" />
                         <h2>Profi City New</h2>
-                        <p>Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
+                        <p><b>Adresa</b>: Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
+                        <p><b>Ultimul update</b>: 3 ore în urmǎ</p>
                         <div className={styles.buttons}>
                             <button className={styles.functional}>It's functional</button>
                             <button className={styles.notFunctional}>Not functional</button>
