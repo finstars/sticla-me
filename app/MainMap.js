@@ -66,9 +66,9 @@ function MainMap() {
                     onClick={handleMarkerClick}
                 >
                     <Pin
-                        background={'#0f9d58'}
+                        background={'#65dc5f'}
                         borderColor={'#006425'}
-                        glyphColor={'#60d98f'}
+                        glyphColor={'#006425'}
                     />
                 </AdvancedMarker>
 
@@ -77,6 +77,10 @@ function MainMap() {
                         <img src="/pin.jpg" alt="" />
                         <h2>Profi City New</h2>
                         <p>Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
+                        <div className={styles.buttons}>
+                            <button className={styles.functional}>It's functional</button>
+                            <button className={styles.notFunctional}>Not functional</button>
+                        </div>
                     </InfoWindow>
                 )}
             </Map>
