@@ -96,7 +96,7 @@ function MainMap() {
 
                 <div className={styles.form}>
                     <input placeholder='Introdu adresa ta' />
-                    <button>Vreau sa reciclez acum</button>
+                    <button>Vreau sa reciclez</button>
                 </div>
             </Map>
         </APIProvider>
