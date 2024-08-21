@@ -42,8 +42,8 @@ function MainMap() {
 
     if (!showMap) {
         return <div className={styles.intro}>
-            <h3>Disponibil in Cluj</h3>
-            <h1>Venim la tine acasa si luam sticlele pentru reciclare</h1>
+            <h3>Disponibil în Cluj</h3>
+            <h1>Venim la tine acasǎ și luǎm sticlele pentru reciclare</h1>
             <button onClick={() => setShowMap(true)}>Începe</button>
         </div>
     }
