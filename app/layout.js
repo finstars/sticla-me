@@ -5,7 +5,7 @@ import "./globals.css";
 const noto = Poppins({ weight: ["400", "500", "600", "700", "800", "900"], subsets: ["latin-ext"] })
 
 export const metadata = {
-  title: "sticla.me",
+  title: "sticla.me - Recicleazǎ-mǎ",
   description: "Venim la tine acasǎ, luǎm sticlele, și le reciclam pentru tine.",
   metadataBase: new URL('https://sticla.me'),
   openGraph: {
