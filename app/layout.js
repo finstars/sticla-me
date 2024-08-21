@@ -9,7 +9,7 @@ export const metadata = {
   description: "Venim la tine acasǎ, luǎm sticlele, și le reciclam pentru tine.",
   metadataBase: new URL('https://sticla.me'),
   openGraph: {
-    images: '/logo3.jpeg',
+    images: '/logo4.jpeg',
   },
 };
 
