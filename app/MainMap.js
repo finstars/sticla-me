@@ -93,6 +93,11 @@ function MainMap() {
                         </div>
                     </InfoWindow>
                 )}
+
+                <div className={styles.form}>
+                    <input placeholder='Introdu adresa ta' />
+                    <button>Vreau sa reciclez acum</button>
+                </div>
             </Map>
         </APIProvider>
     )

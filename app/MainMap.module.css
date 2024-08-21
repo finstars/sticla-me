@@ -117,3 +117,47 @@
     margin: auto;
     cursor: pointer;
 }
+
+.form {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 6;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form input {
+    height: 60px;
+    padding: 0 15px;
+    border-radius: 100px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    font-size: 16px;
+    width: 200px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    outline: none;
+}
+
+.form button {
+    height: 60px;
+    /* padding: 0 15px; */
+    border-radius: 100px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    width: 200px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #65dc5f;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
