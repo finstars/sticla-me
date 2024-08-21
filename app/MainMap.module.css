@@ -34,7 +34,7 @@
     text-align: left;
 }
 
-.infoWindow h2 span {
+.status {
     background: rgb(202 238 201);
     font-weight: 600;
     border-radius: 100px;
@@ -48,6 +48,9 @@
     letter-spacing: 0.5px;
     position: relative;
     bottom: -5px;
+    display: table;
+    margin: -5px 0 15px 0;
+    border-radius: 3px;
 }
 
 .buttons {

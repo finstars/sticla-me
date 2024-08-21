@@ -84,7 +84,8 @@ function MainMap() {
                 {infoWindowShown && (
                     <InfoWindow anchor={marker} className={styles.infoWindow} onClose={handleClose}>
                         <img src="/pin.jpg" alt="" />
-                        <h2>Profi City New <span>Disponibil</span></h2>
+                        <h2>Profi City New</h2>
+                        <div className={styles.status}>Disponibil</div>
                         <p><b>Adresa:</b> Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
                         <p><b>Actualizat</b>: 3 ore în urmǎ</p>
                         <div className={styles.buttons}>
