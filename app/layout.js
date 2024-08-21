@@ -7,6 +7,10 @@ const noto = Poppins({ weight: ["400", "500", "600", "700", "800", "900"], subse
 export const metadata = {
   title: "Sticla.me",
   description: "Don't bottle up, Recycle Smart",
+  metadataBase: new URL('https://sticla.me'),
+  openGraph: {
+    images: '/logo.jpeg',
+  },
 };
 
 
