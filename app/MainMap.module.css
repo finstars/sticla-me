@@ -71,9 +71,49 @@
 }
 
 .functional {
-    background-color: #65dc5f!important;
+    background-color: #65dc5f !important;
 }
 
 .notFunctional {
-    background-color: #fd2045!important;
+    background-color: #fd2045 !important;
+}
+
+.intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: auto;
+    display: table;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+    text-align: center;
+}
+
+.intro h1 {
+    color: #000;
+    font-size: 24px;
+    margin: 20px 0 15px 0;
+}
+
+.intro h3 {
+    color: #65dc5f;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+
+.intro button {
+    background: #65dc5f;
+    padding: 20px 30px;
+    border-radius: 100px;
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    margin: auto;
+    cursor: pointer;
 }

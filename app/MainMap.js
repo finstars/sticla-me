@@ -29,6 +29,7 @@ function MainMap() {
     const [markerRef, marker] = useAdvancedMarkerRef();
 
     const [infoWindowShown, setInfoWindowShown] = useState(false);
+    const [showMap, setShowMap] = useState(false);
 
     // clicking the marker will toggle the infowindow
     const handleMarkerClick = useCallback(
@@ -38,6 +39,14 @@ function MainMap() {
 
     // if the maps api closes the infowindow, we have to synchronize our state
     const handleClose = useCallback(() => setInfoWindowShown(false), []);
+
+    if (!showMap) {
+        return <div className={styles.intro}>
+            <h3>Disponibil in Cluj</h3>
+            <h1>Venim la tine acasa si luam sticlele pentru reciclare</h1>
+            <button onClick={() => setShowMap(true)}>Începe</button>
+        </div>
+    }
 
     return (
         <APIProvider apiKey={apiKey}>

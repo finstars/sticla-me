@@ -13,7 +13,7 @@
   html {
     font: 5vmin/1.3 Serif;
     overflow: hidden;
-    background: #123;
+    background: #fff;
   }
   
   body, head {
@@ -31,7 +31,7 @@
     width: 3em;
     height: 3em;
     content: '.';
-    mix-blend-mode: screen;
+    // mix-blend-mode: screen;
     animation: 44s -27s move infinite ease-in-out alternate;
   }
   
