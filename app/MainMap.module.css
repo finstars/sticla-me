@@ -179,6 +179,7 @@
     background: #fff;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
     overflow: auto;
+    max-width: 90%;
     /* padding: 10px 0; */
 }
 
@@ -203,6 +204,7 @@
 }
 
 .enteredAddress {
+    max-width: 82%;
     position: fixed;
     bottom: 100px;
     z-index: 9;
@@ -227,6 +229,7 @@
 }
 
 .thanks {
+    max-width: 90%;
     position: fixed;
     width: 390px;
     height: 200px;
