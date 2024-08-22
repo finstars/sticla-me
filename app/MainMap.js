@@ -17,6 +17,8 @@ import {
     geocode,
     RequestType,
 } from "react-geocode";
+import { kv } from "@vercel/kv";
+
 
 const containerStyle = {
     overflow: "hidden",
@@ -95,7 +97,13 @@ function MainMap() {
         //         },
         //         (placeDetails) => savePlaceDetailsToState(placeDetails)
         //     );
-    }, [placePredictions]);
+        
+        fetchMarkers()
+    }, []);
+
+    const fetchMarkers = async () => {
+        const markers = await kv.get("markers");
+    }
 
     // clicking the marker will toggle the infowindow
     const handleMarkerClick = useCallback(
@@ -135,8 +143,6 @@ function MainMap() {
             <button onClick={() => setShowMap(true)}>Începe</button>
         </div>
     }
-
-    console.log(address)
 
     return (
         <APIProvider apiKey={apiKey}>
@@ -190,7 +196,7 @@ function MainMap() {
 
                 {infoWindowShown && (
                     <InfoWindow anchor={marker} className={styles.infoWindow} onClose={handleClose}>
-                        <img src="/pin.jpg" alt="" />
+                        {/* <img src="/pin.jpg" alt="" /> */}
                         <h2>Profi City New</h2>
                         <div className={styles.status}>Disponibil</div>
                         <p><b>Adresa:</b> Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
