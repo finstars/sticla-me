@@ -1,9 +1,22 @@
 "use client"
 
-import React, { useCallback, useState } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 // import { GoogleMap, Marker, MarkerClusterer, MarkerF, useJsApiLoader } from '@react-google-maps/api';
 import { APIProvider, Map, AdvancedMarker, Pin, Marker, useAdvancedMarkerRef, InfoWindow } from '@vis.gl/react-google-maps';
 import styles from "./MainMap.module.css"
+import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+import {
+    setKey,
+    setDefaults,
+    setLanguage,
+    setRegion,
+    fromAddress,
+    fromLatLng,
+    fromPlaceId,
+    setLocationType,
+    geocode,
+    RequestType,
+} from "react-geocode";
 
 const containerStyle = {
     overflow: "hidden",
@@ -20,22 +33,97 @@ const center = {
     lng: 23.6236
 };
 
+const INITIAL_CAMERA = {
+    center: center,
+    zoom: 14
+};
+
 const apiKey = "AIzaSyDBo5jso7UAphik_z4r6xf_y07meX5n4qU"
 
+setDefaults({
+    key: apiKey, // Your API key here.
+    language: "ro", // Default language for responses.
+    region: "ro", // Default region for responses.
+});
+
 function MainMap() {
+    const {
+        placesService,
+        placePredictions,
+        getPlacePredictions,
+        isPlacePredictionsLoading,
+    } = usePlacesService({
+        apiKey,
+        options: {
+            // types: ['route'],
+            language: "ro",
+            // locationRestriction: {
+            //     lat: 46,
+            //     lng: 23
+            // },
+            // types: ["Cluj"],
+            componentRestrictions: { country: "ro" },
+        },
+    });
+
+    const [cameraProps, setCameraProps] =
+        useState(INITIAL_CAMERA);
+
+    const handleCameraChange = useCallback((ev) => {
+        // console.log(ev)
+        setCameraProps(ev.detail)
+    });
+
     // `markerRef` and `marker` are needed to establish the connection between
     // the marker and infowindow (if you're using the Marker component, you
     // can use the `useMarkerRef` hook instead).
     const [markerRef, marker] = useAdvancedMarkerRef();
-
+    const [addressMarkerRef, addressMarker] = useAdvancedMarkerRef();
+    const [currentLocation, setCurrentLocation] = useState(null);
     const [infoWindowShown, setInfoWindowShown] = useState(false);
     const [showMap, setShowMap] = useState(false);
+    const [address, setAddress] = useState(null);
+    const [addressRef, setAddressRef] = useState(null);
+    const [thanks, setThanks] = useState(false);
+
+    useEffect(() => {
+        // fetch place details for the first element in placePredictions array
+        // if (placePredictions.length)
+        //     placesService?.getDetails(
+        //         {
+        //             placeId: placePredictions[0].place_id,
+        //         },
+        //         (placeDetails) => savePlaceDetailsToState(placeDetails)
+        //     );
+    }, [placePredictions]);
 
     // clicking the marker will toggle the infowindow
     const handleMarkerClick = useCallback(
         () => setInfoWindowShown(isShown => !isShown),
         []
     );
+
+    const handleSuggestion = (item) => {
+        setAddress(item)
+
+        fromPlaceId(item.place_id)
+            .then(({ results }) => {
+                const { lat, lng } = results[0].geometry.location;
+
+                setCurrentLocation({ lat, lng })
+                setCameraProps({
+                    center: { lat, lng }
+                })
+            })
+            .catch(console.error);
+    }
+
+    const submitRequest = () => {
+        setCurrentLocation(null)
+        getPlacePredictions({ input: "" })
+        setAddress(null)
+        setThanks(true)
+    }
 
     // if the maps api closes the infowindow, we have to synchronize our state
     const handleClose = useCallback(() => setInfoWindowShown(false), []);
@@ -48,13 +136,15 @@ function MainMap() {
         </div>
     }
 
+    console.log(address)
+
     return (
         <APIProvider apiKey={apiKey}>
             <Map
                 mapId="google-map"
                 style={containerStyle}
-                defaultCenter={center}
-                defaultZoom={14}
+                // defaultCenter={center}
+                // defaultZoom={14}
                 gestureHandling={'greedy'}
                 disableDefaultUI={true}
                 options={{
@@ -65,7 +155,9 @@ function MainMap() {
                     streetViewControl: false,
                     mapTypeControl: false,
                 }}
-                zoom={14}
+                {...cameraProps}
+                onCameraChanged={handleCameraChange}
+            // zoom={14}
             // onLoad={onLoad}
             // onUnmount={onUnmount}
             >
@@ -81,6 +173,21 @@ function MainMap() {
                     />
                 </AdvancedMarker>
 
+                {currentLocation &&
+                    <AdvancedMarker
+                        ref={addressMarkerRef}
+                        position={currentLocation}
+                        onClick={() => false}
+                        draggable={true}
+                    >
+                        <Pin
+                            background={'#2196f3'}
+                            borderColor={'#3f51b5'}
+                            glyphColor={'#3f51b5'}
+                        />
+                    </AdvancedMarker>
+                }
+
                 {infoWindowShown && (
                     <InfoWindow anchor={marker} className={styles.infoWindow} onClose={handleClose}>
                         <img src="/pin.jpg" alt="" />
@@ -95,10 +202,61 @@ function MainMap() {
                     </InfoWindow>
                 )}
 
-                <div className={styles.form}>
-                    <input placeholder='Introdu adresa ta' />
-                    <button>Vreau sa reciclez</button>
-                </div>
+                {thanks &&
+                    <div className={styles.thanks}>
+                        <h2>Va multumim!</h2>
+                        <p>O persoana va va contacta in scurt timp.</p>
+                        <button onClick={() => setThanks(false)}>Inchide</button>
+                    </div>
+                }
+
+                {address &&
+                    <>
+                        <div
+                            onClick={() => {
+                                setAddress(null)
+                                getPlacePredictions({ input: "" })
+                            }}
+                            className={styles.enteredAddress}>
+                            <svg xmlns="http://www.w3.org/2000/svg" shapeRendering="geometricPrecision" textRendering="geometricPrecision" imageRendering="optimizeQuality" fillRule="evenodd" clipRule="evenodd" viewBox="0 0 512 463.95"><path fillRule="nonzero" d="M512 332.66H268.5v92.31c-.68 15.47-5.77 26.46-15.43 32.82-25.79 17.2-52.31-5.26-69.24-22.6L14.33 261.6c-19.11-17.28-19.11-41.93 0-59.21L188.71 24.42c16.06-16.39 40.56-34.09 64.36-18.21 9.66 6.35 14.75 17.34 15.43 32.81v92.31H512v201.33z" /></svg>
+
+                            {address.description}
+                        </div>
+
+                        <div className={styles.form}>
+                            <input
+                                onChange={(evt) => {
+                                    getPlacePredictions({ input: evt.target.value });
+                                }} placeholder='Numarul tau de telefon *'
+                            />
+                            <button onClick={() => submitRequest()}>Vreau sa reciclez</button>
+                        </div>
+                    </>
+                }
+
+                {!address &&
+                    <>
+                        <div className={styles.suggestions}>
+                            {placePredictions.map((item) => {
+                                // console.log(item)
+                                return (
+                                    <div onClick={() => handleSuggestion(item)}>{item.description}</div>
+                                )
+                            })}
+                        </div>
+
+                        <div className={styles.form}>
+                            <input
+                                className={styles.enterAddress}
+                                onChange={(evt) => {
+                                    getPlacePredictions({ input: `${evt.target.value}, Cluj, Romania` });
+                                }}
+                                placeholder='Introdu adresa ta *'
+                            />
+                            {/* <button>Vreau sa reciclez</button> */}
+                        </div>
+                    </>
+                }
             </Map>
         </APIProvider>
     )
