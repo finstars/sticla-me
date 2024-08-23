@@ -84,7 +84,7 @@ function MainMap() {
     const [markerRef, marker] = useAdvancedMarkerRef();
     const [addressMarkerRef, addressMarker] = useAdvancedMarkerRef();
     const [currentLocation, setCurrentLocation] = useState(null);
-    const [infoWindowShown, setInfoWindowShown] = useState(false);
+    const [infoWindowShown, setInfoWindowShown] = useState(null);
     const [showMap, setShowMap] = useState(false);
     const [address, setAddress] = useState(null);
     const [addressRef, setAddressRef] = useState(null);
@@ -108,16 +108,18 @@ function MainMap() {
 
         const { markers } = await res.json()
 
-        setMarkers(markers)
-
         setMarkerRefs(markers.map(() => React.createRef()));
+        setMarkers(markers)
     }
 
-    // clicking the marker will toggle the infowindow
-    const handleMarkerClick = useCallback(
-        () => setInfoWindowShown(isShown => !isShown),
-        []
-    );
+    const handleMarkerClick = (index) => {
+        // Toggle the InfoWindow for the clicked marker
+        if (infoWindowShown === index) {
+            setInfoWindowShown(null); // Close if the same marker is clicked again
+        } else {
+            setInfoWindowShown(index); // Show the InfoWindow for the clicked marker
+        }
+    };
 
     const handleSuggestion = (item) => {
         setAddress(item)
@@ -191,24 +193,21 @@ function MainMap() {
                     </AdvancedMarker>
                 }
 
-                {markers.map(({lat, lng, name, address}, index) => (
-                    <span key={index}>
-                        {markers.map((m, i) => (
-                            <AdvancedMarker
-                                ref={markerRefs[index]}
-                                key={i}
-                                position={{ lat, lng }}
-                                onClick={handleMarkerClick}
-                            >
-                                <Pin
-                                    background={'#65dc5f'}
-                                    borderColor={'#006425'}
-                                    glyphColor={'#006425'}
-                                />
-                            </AdvancedMarker>
-                        ))}
+                {markers.map(({ lat, lng, name, address }, index) => (
+                    <>
+                        <AdvancedMarker
+                            ref={markerRefs[index]}
+                            position={{ lat, lng }}
+                            onClick={() => handleMarkerClick(index)}
+                        >
+                            <Pin
+                                background={'#65dc5f'}
+                                borderColor={'#006425'}
+                                glyphColor={'#006425'}
+                            />
+                        </AdvancedMarker>
 
-                        {infoWindowShown && (
+                        {infoWindowShown === index && (
                             <InfoWindow anchor={markerRefs[index]?.current} className={styles.infoWindow} onClose={handleClose}>
                                 {/* <img src="/pin.jpg" alt="" /> */}
                                 <h2>{name} <span className={styles.status}>Disponibil</span></h2>
@@ -220,7 +219,7 @@ function MainMap() {
                                 </div>
                             </InfoWindow>
                         )}
-                    </span>
+                    </>
                 ))}
 
                 {thanks &&
