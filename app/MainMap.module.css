@@ -21,7 +21,9 @@
 .infoWindow h2 {
     margin: 0;
     text-align: left;
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 .infoWindow p {
@@ -31,7 +33,7 @@
     opacity: 0.75;
     line-height: 20px;
     margin: 0 0 5px 0;
-    text-align: left;
+    text-align: center;
 }
 
 .status {

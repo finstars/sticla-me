@@ -75,6 +75,9 @@ function MainMap() {
         setCameraProps(ev.detail)
     });
 
+    const [markerRefs, setMarkerRefs] = useState([]);
+
+
     // `markerRef` and `marker` are needed to establish the connection between
     // the marker and infowindow (if you're using the Marker component, you
     // can use the `useMarkerRef` hook instead).
@@ -86,6 +89,7 @@ function MainMap() {
     const [address, setAddress] = useState(null);
     const [addressRef, setAddressRef] = useState(null);
     const [thanks, setThanks] = useState(false);
+    const [markers, setMarkers] = useState([]);
 
     useEffect(() => {
         // fetch place details for the first element in placePredictions array
@@ -96,11 +100,17 @@ function MainMap() {
         //         },
         //         (placeDetails) => savePlaceDetailsToState(placeDetails)
         //     );
-        
+        fetchMarkers()
     }, []);
 
     const fetchMarkers = async () => {
-        
+        const res = await fetch("/api/get-markers")
+
+        const { markers } = await res.json()
+
+        setMarkers(markers)
+
+        setMarkerRefs(markers.map(() => React.createRef()));
     }
 
     // clicking the marker will toggle the infowindow
@@ -165,17 +175,6 @@ function MainMap() {
             // onLoad={onLoad}
             // onUnmount={onUnmount}
             >
-                <AdvancedMarker
-                    ref={markerRef}
-                    position={{ lat: 46.778830, lng: 23.613560 }}
-                    onClick={handleMarkerClick}
-                >
-                    <Pin
-                        background={'#65dc5f'}
-                        borderColor={'#006425'}
-                        glyphColor={'#006425'}
-                    />
-                </AdvancedMarker>
 
                 {currentLocation &&
                     <AdvancedMarker
@@ -192,19 +191,37 @@ function MainMap() {
                     </AdvancedMarker>
                 }
 
-                {infoWindowShown && (
-                    <InfoWindow anchor={marker} className={styles.infoWindow} onClose={handleClose}>
-                        {/* <img src="/pin.jpg" alt="" /> */}
-                        <h2>Profi City New</h2>
-                        <div className={styles.status}>Disponibil</div>
-                        <p><b>Adresa:</b> Aleea Gârbău nr.12, Cluj-Napoca 400534</p>
-                        <p><b>Actualizat</b>: 3 ore în urmǎ</p>
-                        <div className={styles.buttons}>
-                            <button className={styles.functional}>It's functional</button>
-                            <button className={styles.notFunctional}>Not functional</button>
-                        </div>
-                    </InfoWindow>
-                )}
+                {markers.map(({lat, lng, name, address}, index) => (
+                    <span key={index}>
+                        {markers.map((m, i) => (
+                            <AdvancedMarker
+                                ref={markerRefs[index]}
+                                key={i}
+                                position={{ lat, lng }}
+                                onClick={handleMarkerClick}
+                            >
+                                <Pin
+                                    background={'#65dc5f'}
+                                    borderColor={'#006425'}
+                                    glyphColor={'#006425'}
+                                />
+                            </AdvancedMarker>
+                        ))}
+
+                        {infoWindowShown && (
+                            <InfoWindow anchor={markerRefs[index]?.current} className={styles.infoWindow} onClose={handleClose}>
+                                {/* <img src="/pin.jpg" alt="" /> */}
+                                <h2>{name} <span className={styles.status}>Disponibil</span></h2>
+                                <p>{address}</p>
+                                <p><b>Actualizat</b>: 3 ore în urmǎ</p>
+                                <div className={styles.buttons}>
+                                    <button className={styles.functional}>It's functional</button>
+                                    <button className={styles.notFunctional}>Not functional</button>
+                                </div>
+                            </InfoWindow>
+                        )}
+                    </span>
+                ))}
 
                 {thanks &&
                     <div className={styles.thanks}>
