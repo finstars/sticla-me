@@ -17,7 +17,6 @@ import {
     geocode,
     RequestType,
 } from "react-geocode";
-import { kv } from "@vercel/kv";
 
 
 const containerStyle = {
@@ -98,11 +97,10 @@ function MainMap() {
         //         (placeDetails) => savePlaceDetailsToState(placeDetails)
         //     );
         
-        fetchMarkers()
     }, []);
 
     const fetchMarkers = async () => {
-        const markers = await kv.get("markers");
+        
     }
 
     // clicking the marker will toggle the infowindow
