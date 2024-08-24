@@ -271,7 +271,7 @@ function MainMap() {
                                 onChange={(evt) => {
                                     getPlacePredictions({ input: `${evt.target.value}, Cluj, Romania` });
                                 }}
-                                placeholder='Introdu adresa ta si venim imediat, daca ai sticle ;)'
+                                placeholder='Introdu adresa ta si venim la tine'
                             />
                             {/* <button>Vreau sa reciclez</button> */}
                         </div>
